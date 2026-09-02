@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#08060f"/>
+      <stop offset="55%" stop-color="#140b25"/>
+      <stop offset="100%" stop-color="#260b2d"/>
+    </linearGradient>
+
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect
+    width="512"
+    height="512"
+    rx="90"
+    fill="url(#bg)"
+  />
+
+  <!-- Neon circular ring -->
+  <circle
+    cx="256"
+    cy="256"
+    r="158"
+    fill="none"
+    stroke="url(#neon)"
+    stroke-width="8"
+    filter="url(#glow)"
+  />
+
+  <!-- Left waveform -->
+  <g
+    stroke="#22d3ee"
+    stroke-width="8"
+    stroke-linecap="round"
+    filter="url(#glow)"
+  >
+    <line x1="55" y1="256" x2="70" y2="256"/>
+    <line x1="78" y1="256" x2="78" y2="242"/>
+    <line x1="92" y1="256" x2="92" y2="225"/>
+    <line x1="108" y1="256" x2="108" y2="210"/>
+    <line x1="124" y1="256" x2="124" y2="230"/>
+    <line x1="140" y1="256" x2="140" y2="242"/>
+    <line x1="156" y1="256" x2="156" y2="220"/>
+    <line x1="172" y1="256" x2="172" y2="235"/>
+  </g>
+
+  <!-- Right waveform -->
+  <g
+    stroke="#ec4899"
+    stroke-width="8"
+    stroke-linecap="round"
+    filter="url(#glow)"
+  >
+    <line x1="340" y1="256" x2="356" y2="256"/>
+    <line x1="356" y1="256" x2="356" y2="235"/>
+    <line x1="372" y1="256" x2="372" y2="220"/>
+    <line x1="388" y1="256" x2="388" y2="242"/>
+    <line x1="404" y1="256" x2="404" y2="210"/>
+    <line x1="420" y1="256" x2="420" y2="230"/>
+    <line x1="436" y1="256" x2="436" y2="242"/>
+    <line x1="452" y1="256" x2="452" y2="256"/>
+  </g>
+
+  <!-- S -->
+  <text
+    x="256"
+    y="330"
+    text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="245"
+    font-weight="900"
+    fill="#ffffff"
+    filter="url(#glow)"
+  >S</text>
+
+  <!-- Dot -->
+  <circle
+    cx="340"
+    cy="330"
+    r="13"
+    fill="#ffffff"
+    filter="url(#glow)"
+  />
+</svg>
