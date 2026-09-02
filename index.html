@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SLOWED. — Instant Slowed + Reverb</title>
+    <meta
+      name="description"
+      content="Transform any song into a dreamy, atmospheric masterpiece — right in your browser, in seconds. Free, no sign-up required."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">SLOWED.</a>
+        <div class="nav-links" id="navLinks">
+          <a href="#tool">Tool</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#features">Features</a>
+          <a href="#examples">Examples</a>
+        </div>
+        <a href="#tool" class="btn-gradient btn-nav-cta">Try It Free &rarr;</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="nav-mobile" id="navMobile">
+        <a href="#tool">Tool</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#features">Features</a>
+        <a href="#examples">Examples</a>
+        <a href="#tool" class="btn-gradient btn-sm">Try It Free &rarr;</a>
+      </div>
+    </nav>
+
+    <main>
+      <!-- ===== HERO — scroll-driven frames ===== -->
+      <section id="hero">
+        <canvas id="heroFrameCanvas" aria-hidden="true"></canvas>
+        <div class="hero-frame-overlay" aria-hidden="true"></div>
+        <div class="hero-content">
+          <h1 class="hero-headline">
+            <span class="headline-line">SLOW IT DOWN.</span>
+            <span class="headline-line">LET IT</span>
+            <span class="headline-line"
+              ><span class="accent-cyan">REVERB</span></span
+            >
+          </h1>
+          <p class="hero-sub">
+            Transform any song into a dreamy, atmospheric masterpiece &mdash;
+            right in your browser, in seconds. No sign-up, no install,
+            completely free.
+          </p>
+          <div class="hero-ctas">
+            <a href="#tool" class="btn-gradient btn-magnetic">Upload a Track</a>
+            <a href="#examples" class="btn-ghost btn-magnetic"
+              >Hear an Example</a
+            >
+          </div>
+          <canvas
+            id="heroWaveform"
+            width="420"
+            height="56"
+            aria-hidden="true"
+          ></canvas>
+        </div>
+        <div class="scroll-indicator" id="scrollIndicator">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <!-- Scroll-synced text that appears over the frame animation -->
+        <div class="hero-scroll-text" id="scrollText1">
+          <h2>NO STUDIO.<br /><span class="accent-cyan">NO PLUGINS.</span></h2>
+          <p>Just a browser tab and your favorite track.</p>
+        </div>
+        <div class="hero-scroll-text" id="scrollText2">
+          <h2>
+            SLOW THE TEMPO.<br /><span class="accent-magenta"
+              >STRETCH THE SPACE.</span
+            >
+          </h2>
+          <p>Dial in speed and reverb until it feels like a memory.</p>
+        </div>
+        <div class="hero-scroll-text" id="scrollText3">
+          <h2>EXPORT IT.<br /><span class="accent-cyan">SHARE IT.</span></h2>
+          <p>
+            High-quality WAV or MP3, ready in seconds &mdash; completely free.
+          </p>
+        </div>
+        <div class="hero-loader" id="heroLoader">
+          <div class="hero-loader-bar">
+            <div class="hero-loader-fill" id="heroLoaderFill"></div>
+          </div>
+          <span id="heroLoaderText">Loading frames...</span>
+        </div>
+      </section>
+
+      <!-- ===== MARQUEE ===== -->
+      <div class="marquee-strip" aria-hidden="true">
+        <div class="marquee-track">
+          <span
+            >SLOWED + REVERB &nbsp;&#10022;&nbsp; FREE TO USE
+            &nbsp;&#10022;&nbsp; NO SIGN-UP &nbsp;&#10022;&nbsp; EXPORT IN
+            SECONDS &nbsp;&#10022;&nbsp; MADE FOR MUSIC LOVERS
+            &nbsp;&#10022;&nbsp; 100% BROWSER-BASED &nbsp;&#10022;&nbsp; HIGH
+            QUALITY WAV &amp; MP3 &nbsp;&#10022;&nbsp; INSTANT PREVIEW
+            &nbsp;&#10022;&nbsp;</span
+          >
+          <span
+            >SLOWED + REVERB &nbsp;&#10022;&nbsp; FREE TO USE
+            &nbsp;&#10022;&nbsp; NO SIGN-UP &nbsp;&#10022;&nbsp; EXPORT IN
+            SECONDS &nbsp;&#10022;&nbsp; MADE FOR MUSIC LOVERS
+            &nbsp;&#10022;&nbsp; 100% BROWSER-BASED &nbsp;&#10022;&nbsp; HIGH
+            QUALITY WAV &amp; MP3 &nbsp;&#10022;&nbsp; INSTANT PREVIEW
+            &nbsp;&#10022;&nbsp;</span
+          >
+        </div>
+      </div>
+
+      <!-- ===== TOOL ===== -->
+      <section id="tool">
+        <div class="container">
+          <h2 class="section-headline reveal">
+            <span class="accent-magenta">TRY</span> IT NOW
+          </h2>
+          <div class="tool-card glass reveal" id="toolCard">
+            <div class="tool-body">
+              <div class="tool-empty" id="toolEmpty">
+                <div
+                  class="drop-zone"
+                  id="dropZone"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Upload audio file"
+                >
+                  <div class="drop-icon">
+                    <i class="fas fa-cloud-arrow-up"></i>
+                  </div>
+                  <p class="drop-text">Drag and drop your audio file here</p>
+                  <p class="drop-sub">
+                    or click to browse &mdash; MP3, WAV, M4A supported
+                  </p>
+                  <input type="file" id="fileInput" accept="audio/*" hidden />
+                </div>
+              </div>
+              <div class="tool-active" id="toolActive">
+                <div class="tool-file-info">
+                  <i class="fas fa-music"></i>
+                  <span id="fileName">track.mp3</span>
+                  <button id="changeFileBtn" class="btn-text" type="button">
+                    Change
+                  </button>
+                </div>
+                <div class="waveform-wrap">
+                  <canvas id="waveformCanvas"></canvas>
+                </div>
+                <div class="player-controls">
+                  <button
+                    id="playBtn"
+                    class="btn-play"
+                    aria-label="Play or pause"
+                  >
+                    <i class="fas fa-play" id="playIcon"></i>
+                  </button>
+                  <span id="timeDisplay">0:00 / 0:00</span>
+                </div>
+                <div class="presets-row">
+                  <span class="presets-label">Presets</span>
+                  <div class="presets-list" id="presetsList">
+                    <button
+                      type="button"
+                      class="preset-btn active"
+                      data-speed="80"
+                      data-reverb="50"
+                    >
+                      Classic Slowed
+                    </button>
+                    <button
+                      type="button"
+                      class="preset-btn"
+                      data-speed="65"
+                      data-reverb="75"
+                    >
+                      Deep &amp; Slow
+                    </button>
+                    <button
+                      type="button"
+                      class="preset-btn"
+                      data-speed="55"
+                      data-reverb="90"
+                    >
+                      Underwater
+                    </button>
+                    <button
+                      type="button"
+                      class="preset-btn"
+                      data-speed="90"
+                      data-reverb="25"
+                    >
+                      Chillhop
+                    </button>
+                    <button
+                      type="button"
+                      class="preset-btn"
+                      data-speed="70"
+                      data-reverb="60"
+                    >
+                      Dreamscape
+                    </button>
+                  </div>
+                </div>
+                <div class="sliders-row">
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label for="speedSlider">Speed</label
+                      ><span id="speedValue" class="slider-val">0.80x</span>
+                    </div>
+                    <input
+                      type="range"
+                      id="speedSlider"
+                      min="50"
+                      max="100"
+                      value="80"
+                      step="1"
+                    />
+                  </div>
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label for="reverbSlider">Reverb</label
+                      ><span id="reverbValue" class="slider-val">50%</span>
+                    </div>
+                    <input
+                      type="range"
+                      id="reverbSlider"
+                      min="0"
+                      max="100"
+                      value="50"
+                      step="1"
+                    />
+                  </div>
+                </div>
+                <div class="tool-actions">
+                  <div class="export-buttons">
+                    <button
+                      id="exportWavBtn"
+                      class="btn-gradient btn-magnetic"
+                      data-format="wav"
+                      type="button"
+                    >
+                      <i class="fas fa-download"></i>&nbsp; Export WAV
+                    </button>
+                    <button
+                      id="exportMp3Btn"
+                      class="btn-ghost"
+                      data-format="mp3"
+                      type="button"
+                    >
+                      <i class="fas fa-download"></i>&nbsp; Export MP3
+                    </button>
+                  </div>
+                  <div id="exportProgress" class="export-progress" hidden>
+                    <div class="progress-bar">
+                      <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressText">Rendering...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== HOW IT WORKS ===== -->
+      <section id="how-it-works">
+        <div class="container">
+          <h2 class="section-headline reveal">
+            THREE STEPS TO <span class="accent-cyan">PERFECTION</span>
+          </h2>
+          <div class="steps-grid reveal-stagger">
+            <div class="step-card glass tilt-card">
+              <span class="step-num">01</span>
+              <div class="step-icon">
+                <i class="fas fa-arrow-up-from-bracket"></i>
+              </div>
+              <h3>Upload</h3>
+              <p>
+                Drag and drop any MP3, WAV, or M4A file into the tool. No size
+                limits, no format headaches.
+              </p>
+            </div>
+            <div class="step-card glass tilt-card">
+              <span class="step-num">02</span>
+              <div class="step-icon"><i class="fas fa-sliders"></i></div>
+              <h3>Adjust</h3>
+              <p>
+                Tweak the speed and reverb sliders in real-time. Hear changes
+                instantly as you dial in your sound.
+              </p>
+            </div>
+            <div class="step-card glass tilt-card">
+              <span class="step-num">03</span>
+              <div class="step-icon">
+                <i class="fas fa-file-arrow-down"></i>
+              </div>
+              <h3>Export</h3>
+              <p>
+                Hit export and your processed track downloads as a high-quality
+                WAV or MP3 file in seconds.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SOUND MOODS — horizontal scroll carousel ===== -->
+      <section id="moods" class="carousel-section">
+        <div class="carousel-track">
+          <div
+            class="mood-card"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/late-night-hw/900/600.jpg&quot;);
+            "
+          >
+            <div class="mood-overlay"></div>
+            <div class="mood-content">
+              <span class="mood-tag">Mood</span>
+              <h3>Late Night Drive</h3>
+              <p>
+                Slow it down and feel the city lights blur past your window.
+              </p>
+            </div>
+          </div>
+          <div
+            class="mood-card"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/rainy-afternoon-hw/900/600.jpg&quot;);
+            "
+          >
+            <div class="mood-overlay"></div>
+            <div class="mood-content">
+              <span class="mood-tag">Mood</span>
+              <h3>Rainy Afternoon</h3>
+              <p>Let the reverb mirror the rain bouncing off every surface.</p>
+            </div>
+          </div>
+          <div
+            class="mood-card"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/lofi-study-hw/900/600.jpg&quot;);
+            "
+          >
+            <div class="mood-overlay"></div>
+            <div class="mood-content">
+              <span class="mood-tag">Mood</span>
+              <h3>Lo-fi Study Session</h3>
+              <p>
+                Warmer, softer tones that help you focus without distraction.
+              </p>
+            </div>
+          </div>
+          <div
+            class="mood-card"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/dreamy-sunset-hw/900/600.jpg&quot;);
+            "
+          >
+            <div class="mood-overlay"></div>
+            <div class="mood-content">
+              <span class="mood-tag">Mood</span>
+              <h3>Dreamy Sunset</h3>
+              <p>Ethereal reverb tails that stretch into the fading light.</p>
+            </div>
+          </div>
+          <div
+            class="mood-card"
+            style="
+              background-image: url(&quot;https://picsum.photos/seed/midnight-groove-hw/900/600.jpg&quot;);
+            "
+          >
+            <div class="mood-overlay"></div>
+            <div class="mood-content">
+              <span class="mood-tag">Mood</span>
+              <h3>Midnight Groove</h3>
+              <p>Deep, bass-heavy slow downs that pull you into the rhythm.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FEATURES ===== -->
+      <section id="features">
+        <div class="container">
+          <h2 class="section-headline reveal">
+            WHY MUSIC <span class="accent-magenta">LOVERS</span> CHOOSE SLOWED
+          </h2>
+          <div class="features-grid reveal-stagger">
+            <div class="feature-card glass tilt-card">
+              <div class="feature-icon"><i class="fas fa-globe"></i></div>
+              <h3>100% Browser-Based</h3>
+              <p>
+                No downloads, no installs. Everything runs right in your browser
+                using the Web Audio API.
+              </p>
+            </div>
+            <div class="feature-card glass tilt-card">
+              <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+              <h3>No Sign-Up Required</h3>
+              <p>
+                Jump straight in. No account, no email, no paywall. Just upload
+                and create.
+              </p>
+            </div>
+            <div class="feature-card glass tilt-card">
+              <div class="feature-icon"><i class="fas fa-wave-square"></i></div>
+              <h3>High Quality Export</h3>
+              <p>
+                Export your processed tracks as lossless WAV or compressed MP3
+                files, preserving every detail of the reverb tail.
+              </p>
+            </div>
+            <div class="feature-card glass tilt-card">
+              <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+              <h3>Free Forever</h3>
+              <p>
+                No tiers, no trials, no "premium" upsell. Every feature is
+                available to everyone, always.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== STATS ===== -->
+      <section id="stats">
+        <div class="stats-orb stats-orb-1" aria-hidden="true"></div>
+        <div class="stats-orb stats-orb-2" aria-hidden="true"></div>
+        <div class="container">
+          <div class="stats-grid reveal-stagger">
+            <div class="stat-item">
+              <span class="stat-number" data-count="50000" data-suffix="+"
+                >0</span
+              >
+              <span class="stat-label">Tracks Processed</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" data-count="124" data-suffix="+"
+                >0</span
+              >
+              <span class="stat-label">Countries</span>
+            </div>
+            <div class="stat-item">
+              <span
+                class="stat-number"
+                data-count="4.9"
+                data-suffix=""
+                data-decimals="1"
+                >0</span
+              >
+              <span class="stat-label">Average Rating</span>
+            </div>
+            <div class="stat-item">
+              <span
+                class="stat-number"
+                data-count="0"
+                data-prefix="$"
+                data-suffix=""
+                >0</span
+              >
+              <span class="stat-label">Cost Forever</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== EXAMPLES ===== -->
+      <section id="examples">
+        <div class="container">
+          <h2 class="section-headline reveal">
+            HEAR THE <span class="accent-cyan">DIFFERENCE</span>
+          </h2>
+          <div class="examples-grid reveal-stagger">
+            <div class="example-card glass">
+              <h3>Ambient Pad</h3>
+              <p class="example-desc">
+                A sustained chord that showcases lush reverb tails.
+              </p>
+              <div class="example-players">
+                <div class="example-player">
+                  <span class="example-label">Original</span>
+                  <button
+                    class="btn-ex-play"
+                    data-idx="0"
+                    data-type="original"
+                    aria-label="Play original"
+                  >
+                    <i class="fas fa-play"></i>
+                  </button>
+                  <div class="ex-progress">
+                    <div class="ex-progress-fill"></div>
+                  </div>
+                </div>
+                <div class="example-player">
+                  <span class="example-label">Slowed + Reverb</span>
+                  <button
+                    class="btn-ex-play"
+                    data-idx="0"
+                    data-type="slowed"
+                    aria-label="Play slowed"
+                  >
+                    <i class="fas fa-play"></i>
+                  </button>
+                  <div class="ex-progress">
+                    <div class="ex-progress-fill"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="example-card glass">
+              <h3>Plucky Arpeggio</h3>
+              <p class="example-desc">
+                A picked sequence that reveals how slowing stretches each note.
+              </p>
+              <div class="example-players">
+                <div class="example-player">
+                  <span class="example-label">Original</span>
+                  <button
+                    class="btn-ex-play"
+                    data-idx="1"
+                    data-type="original"
+                    aria-label="Play original"
+                  >
+                    <i class="fas fa-play"></i>
+                  </button>
+                  <div class="ex-progress">
+                    <div class="ex-progress-fill"></div>
+                  </div>
+                </div>
+                <div class="example-player">
+                  <span class="example-label">Slowed + Reverb</span>
+                  <button
+                    class="btn-ex-play"
+                    data-idx="1"
+                    data-type="slowed"
+                    aria-label="Play slowed"
+                  >
+                    <i class="fas fa-play"></i>
+                  </button>
+                  <div class="ex-progress">
+                    <div class="ex-progress-fill"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TESTIMONIALS ===== -->
+      <section id="testimonials">
+        <div class="container">
+          <h2 class="section-headline reveal">
+            TRUSTED BY <span class="accent-magenta">CREATORS</span>
+          </h2>
+          <div class="testimonials-grid reveal-stagger">
+            <div class="testimonial-card glass">
+              <p class="t-quote">
+                &ldquo;SLOWED. completely changed how I listen to music. The
+                reverb quality is insane for a browser tool.&rdquo;
+              </p>
+              <div class="t-author">
+                <img
+                  src="https://picsum.photos/seed/alex-riv/48/48.jpg"
+                  alt="Alex Rivera"
+                  class="t-avatar"
+                  loading="lazy"
+                />
+                <div>
+                  <span class="t-name">Alex Rivera</span
+                  ><span class="t-role">Music Producer</span>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card glass">
+              <p class="t-quote">
+                &ldquo;I used to use Audition for this. Now I just drag and
+                drop. It&rsquo;s literally three seconds.&rdquo;
+              </p>
+              <div class="t-author">
+                <img
+                  src="https://picsum.photos/seed/jordan-lee/48/48.jpg"
+                  alt="Jordan Lee"
+                  class="t-avatar"
+                  loading="lazy"
+                />
+                <div>
+                  <span class="t-name">Jordan Lee</span
+                  ><span class="t-role">YouTuber</span>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card glass">
+              <p class="t-quote">
+                &ldquo;The slowed version of my favorite tracks hits different.
+                This is my go-to tool now.&rdquo;
+              </p>
+              <div class="t-author">
+                <img
+                  src="https://picsum.photos/seed/sam-chen/48/48.jpg"
+                  alt="Sam Chen"
+                  class="t-avatar"
+                  loading="lazy"
+                />
+                <div>
+                  <span class="t-name">Sam Chen</span
+                  ><span class="t-role">Playlist Curator</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== BOTTOM IMAGE MARQUEE ===== -->
+      <div class="image-marquee" aria-hidden="true">
+        <div class="image-marquee-track">
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-a1/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-b2/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-c3/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-d4/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-e5/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-f6/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-g7/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-h8/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <!-- duplicated for seamless loop -->
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-a1/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-b2/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-c3/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-d4/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-e5/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-f6/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-g7/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="im-item">
+            <img
+              src="https://picsum.photos/seed/strip-h8/320/200.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="footer-logo">SLOWED.</span>
+            <p>
+              Transform any song into a dreamy masterpiece &mdash; right in your
+              browser.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="#tool">Tool</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#features">Features</a>
+            <a href="#examples">Examples</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </div>
+          <div class="footer-col footer-newsletter">
+            <h4>Stay Updated</h4>
+            <form
+              id="newsletterForm"
+              class="nl-form"
+              action="https://formspree.io/f/YOUR_FORM_ID"
+              method="POST"
+            >
+              <input
+                type="email"
+                name="email"
+                placeholder="you@email.com"
+                required
+                aria-label="Email address"
+              />
+              <button type="submit" class="btn-gradient btn-sm">
+                Subscribe
+              </button>
+              <p id="newsletterStatus" class="nl-status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2025 SLOWED. All rights reserved.</span>
+          <div class="footer-socials">
+            <a href="#" aria-label="Twitter"
+              ><i class="fab fa-x-twitter"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
